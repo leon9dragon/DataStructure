@@ -29,6 +29,39 @@ public class SinglyLinkList {
         temp.next = new_node;
     }
 
+    //排序添加节点
+    //首先找出正确的位置
+    //然后当前节点的next域指向前一个节点next域所指向的位置
+    //最后前一个节点的next域改为指向当前节点
+    public void addNodeOrder(TheNode new_node){
+        //编号不能小于等于0
+        if(new_node.no <= 0){
+            System.out.println("the no cant be 0 or less than 0 !");
+            return;
+        }
+        //因为head节点不能动, 因此需要一个辅助指针temp
+        TheNode temp = head_node;
+        while(true){
+            //当指针指到最后一个节点时, 跳出循环
+            if(temp.next == null){
+                temp.next = new_node;
+                break;
+            }
+
+            //找到要插入的位置的前一个节点
+            if(temp.next.no > new_node.no){
+                new_node.next = temp.next;
+                temp.next = new_node;
+                break;
+            }
+            else if(temp.next.no == new_node.no){
+                System.out.println("this no:"+ new_node.no + " is existed!");
+                break;
+            }
+            temp = temp.next;
+        }
+    }
+
     //显示链表
     public void showList(){
         //先判断链表是否为空
