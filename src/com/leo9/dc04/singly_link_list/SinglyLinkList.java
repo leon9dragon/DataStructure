@@ -62,6 +62,45 @@ public class SinglyLinkList {
         }
     }
 
+    //修改节点, 根据no来寻找节点, 因此no不能被修改
+    public void editNode(int edit_no, String new_name, String new_nick_name){
+        //因为head节点不能动, 因此需要一个辅助指针temp
+        TheNode temp = head_node;
+        while (true){
+            if(temp.no == edit_no){
+                temp.name = new_name;
+                temp.nick_name = new_nick_name;
+                break;
+            }
+
+            if(temp.next == null){
+                System.out.println("this node:" + edit_no + " is not existed!");
+                break;
+            }
+            temp = temp.next;
+        }
+    }
+
+    //删除节点, 根据no来进行查找
+    public void delNode(int del_no){
+        //因为head节点不能动, 因此需要一个辅助指针temp
+        TheNode temp = head_node;
+        while(true){
+            if(temp.next == null){
+                System.out.println("this node: " + del_no + " is not existed!");
+                break;
+            }
+
+            if(temp.next.no == del_no){
+                temp.next = temp.next.next;
+                break;
+            }
+
+
+            temp = temp.next;
+        }
+    }
+
     //显示链表
     public void showList(){
         //先判断链表是否为空
