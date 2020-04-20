@@ -43,12 +43,16 @@ public class TestDemoSLL {
         //输出链表
         the_list02.showList();
 
-        //删除节点
-        System.out.println("==============================================");
-        the_list02.delNode(3);
-        the_list02.delNode(5);
+//        //删除节点
+//        System.out.println("==============================================");
+//        the_list02.delNode(3);
+//        the_list02.delNode(5);
+//
+//        //输出链表
+//        the_list02.showList();
 
-        //输出链表
-        the_list02.showList();
+        //反转链表
+        System.out.println("==============================================");
+        the_list02.reversalList().showList();
     }
 }

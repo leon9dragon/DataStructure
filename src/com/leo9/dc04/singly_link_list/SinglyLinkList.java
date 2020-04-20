@@ -121,4 +121,32 @@ public class SinglyLinkList {
             temp = temp.next;
         }
     }
+
+    //反转链表
+    public SinglyLinkList reversalList(){
+        //创建临时指针, 先指向原链表的头节点
+        TheNode temp = this.head_node;
+
+        //创建新链表, 用来接受倒置节点
+        SinglyLinkList rev_list = new SinglyLinkList();
+
+        //判断链表是否为空, 为空直接返回
+        if(temp.next == null){
+            System.out.println("the list is empty!");
+            return rev_list;
+        }
+
+        //temp从第一个有效节点开始进行遍历
+        temp = temp.next;
+        while(temp != null){
+            //复制当前节点
+            TheNode copy_node = new TheNode(temp.no,temp.name,temp.nick_name);
+            //插入复制节点到新链表
+            copy_node.next = rev_list.head_node.next;
+            rev_list.head_node.next = copy_node;
+            //指针后移
+            temp = temp.next;
+        }
+        return rev_list;
+    }
 }
