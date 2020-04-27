@@ -9,7 +9,7 @@ public class TestDemoCLL {
         CircleLinkList crlist = new CircleLinkList();
 
         //循环增加节点
-        for(int i = 1; i < 6; i++){
+        for(int i = 1; i < 7; i++){
             crlist.addNode(new TheNodeC(i,"NO." + i,""));
         }
 
@@ -23,14 +23,14 @@ public class TestDemoCLL {
         TheNodeC temp = crlist.getHead_pointer();
         while(crlist.getNum_of_node() != 0){
             //若设定报数为2出列,则当前节点的下一节点则为出列节点
-            int del_no = temp.next.no;
+            int del_no = temp.next.next.no;
             System.out.println("delete the node named: NO." + del_no);
 
             //删除目标节点
             crlist.delNode(del_no);
 
             //temp指针后移
-            temp = temp.next;
+            temp = temp.next.next;
         }
 
         System.out.println("===============================");
