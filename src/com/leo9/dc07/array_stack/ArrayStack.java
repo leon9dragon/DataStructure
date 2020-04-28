@@ -70,5 +70,56 @@ public class ArrayStack {
             System.out.println("stack[" + i + "] = " + stack[i]);
         }
     }
+
+    //返回运算符优先级, 优先级由user决定, 用数字表示
+    //数字越大优先级越高
+    public int priority(int oper){
+        if(oper == '*' || oper == '/'){
+            return 1;
+        }
+        else if(oper == '+' || oper == '-'){
+            return 0;
+        }
+        else {
+            //假定运算式只有四则运算符号,若出现四则运算符外的符号, 返回-1
+            return -1;
+        }
+    }
+
+    //判断是否为运算符
+    public boolean isOper(char val){
+        return val == '+' || val == '-' || val == '*' || val == '/';
+    }
+
+    //运算方法
+    public int calculate(int num1, int num2, int oper){
+        //定义变量用于接收计算结果
+        int res = 0;
+
+        //判断操作符
+        switch (oper){
+            case '+':
+                res = num2 + num1;
+                break;
+            case '-':
+                //num2是后出栈的那一位
+                res = num2 - num1;
+                break;
+            case '*':
+                res = num2 * num1;
+                break;
+            case '/':
+                res = num2 / num1;
+                break;
+            default:
+                break;
+        }
+        return res;
+    }
+
+    //获取栈顶
+    public int getTopData(){
+        return stack[top];
+    }
 }
 
