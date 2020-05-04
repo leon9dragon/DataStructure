@@ -25,7 +25,7 @@ public class TestDemoAS {
         //region 表达式的运算
 
         //定义一个表达式进行测试
-        String expression = "4+6/2-2";
+        String expression = "4-6-2*2";
 
         //创建两个栈, 一个数栈一个符号栈
         ArrayStack numStack = new ArrayStack(10);
@@ -58,15 +58,17 @@ public class TestDemoAS {
                         res = numStack.calculate(num1,num2,oper);
                         //把运算结果入数栈
                         numStack.pushData(res);
-                        //令符号栈最多只有2个操作符, 防止出现减法/除法失误
+                        //令符号栈最多只有2个操作符, 防止出现减法/除法失误, 要先判断栈是否为空
                         //把当前操作符入符号栈, 入栈前先判断当前操作符优先级是否小于或者等于栈中的操作符
-                        if(operStack.priority(ch) <= operStack.priority(operStack.getTopData())){
-                            num1 = numStack.popData();
-                            num2 = numStack.popData();
-                            oper = operStack.popData();
-                            res = numStack.calculate(num1,num2,oper);
-                            //把运算结果入数栈
-                            numStack.pushData(res);
+                        if(!operStack.isEmpty()){
+                            if(operStack.priority(ch) <= operStack.priority(operStack.getTopData())){
+                                num1 = numStack.popData();
+                                num2 = numStack.popData();
+                                oper = operStack.popData();
+                                res = numStack.calculate(num1,num2,oper);
+                                //把运算结果入数栈
+                                numStack.pushData(res);
+                            }
                         }
                         operStack.pushData(ch);
                     }
@@ -87,6 +89,16 @@ public class TestDemoAS {
                 numStack.pushData(ch - 48);
 
                 //当处理多位数时, 不能立即入栈, 要先判断后一位是否为符号再决定入栈
+                int temp = 0;
+                while(true){
+                    temp++;
+                    char ch2 = expression.substring(index + temp, index + temp + 1).charAt(0);
+                    if(!operStack.isOper(ch2)){
+                        ch += ch2;
+                    }
+                }
+
+                
 
             }
             //让index+1,并判断是否扫描到expression最后
@@ -114,7 +126,8 @@ public class TestDemoAS {
         }
 
         //循环结束后数栈只剩结果, 进行输出
-        System.out.println("the result of '"+ expression +"' is: " + numStack.popData());
+        System.out.println("=======result of calculate==========");
+        System.out.println(expression + " = " + numStack.popData());
 
         //endregion
     }
