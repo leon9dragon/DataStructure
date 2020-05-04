@@ -6,27 +6,40 @@ import java.util.Stack;
 
 public class TestDemoPN {
     public static void main(String[] args) {
+        //完成一个将中缀表达式转成后缀表达式的功能
+        /*思路说明
+        1.以中缀表达式 "1 + ((2 + 3) * 4) - 5" 示例, 将其转换成 "1 2 3 + 4 * + 5 -"
+        2.直接对字符串进行操作不方便, 因此先将字符串表达式转换成中缀表达式对应的List
+          即将字符串进行分割遍历, 将其存入一个ArrayList中
+        */
+        String expression = "1+((2+3)*4)-5";
+
+
+
         //先定义逆波兰表达式
         //表达式 `(3+4)*5-6` 对应的后缀表达式是 `3 4 + 5 * 6 -`
         //为了方便, 逆波兰表达式的数字和符号用空格隔开
         String suffixExpression = "3 4 + 5 * 6 -";
-        //思路
-        //1.先将逆波兰表达式放到ArrayList中
-        //2.将ArrayList传递给一个方法,遍历ArrayList配合栈完成计算
+        /*思路
+        1.先将逆波兰表达式放到ArrayList中
+        2.将ArrayList传递给一个方法,遍历ArrayList配合栈完成计算
+        */
         List<String> rpnList = getListString(suffixExpression);
 
         int res = calculate(rpnList);
         System.out.println("the result of '(3+4)*5-6' is " + res);
     }
 
+    //将中缀表达式转换成对应的ArrayList
+
     //将一个逆波兰表达式依次将数字和运算符放入到ArrayList中
     public static List<String> getListString(String suffixExpression){
         //将suffixExpression以空格进行分分割
         String[] split = suffixExpression.split(" ");
-        //创建一个ArrayList
-        List<String> list = new ArrayList<String>();
-        //遍历字符串数组, 并用list接收数字和运算符
-        for(String ele: split){
+            //创建一个ArrayList
+            List<String> list = new ArrayList<String>();
+            //遍历字符串数组, 并用list接收数字和运算符
+            for(String ele: split){
             list.add(ele);
         }
         return list;
