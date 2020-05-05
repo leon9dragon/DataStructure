@@ -15,7 +15,8 @@ public class TestDemoPN {
     public static void main(String[] args) {
         //定义中缀表达式
         //String expression = "1+((2+3)*4)-5";
-        String expression = "4*((2+3)*4-4)-5";
+        //String expression = "4*((2+3)*4-4)-5";
+        String expression = "50*(3-1)+40/2+11";
         //转换中缀表达式为list
         List<String> infix_expression_list = toInfixExpressionList(expression);
         //将中缀表达式的list转为后缀表达式的list
