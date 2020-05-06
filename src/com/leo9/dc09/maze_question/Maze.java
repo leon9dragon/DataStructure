@@ -87,7 +87,7 @@ public class Maze {
                     //在这个点基础下向左走, 列数j - 1
                     return true;
                 }
-                
+
                 else {
                     //如果以上4个条件都不成立, 将该点置成3, 并返回false
                     map[i][j] = 3;
