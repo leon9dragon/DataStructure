@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public class QuickSort {
     public static void main(String[] args) {
-        int[] arr = {11, 2, 6, 8, 47, 12, 96, 34};
+        int[] arr = {11, 2, 6, 8, 47, 12, 96, 34, 207};
+        System.out.println("=========select the mid ele as key===========");
         System.out.println("Origin Array -> " + Arrays.toString(arr));
         sortArray(arr, 0, arr.length - 1);
         System.out.println("Sorted Array -> " + Arrays.toString(arr));
@@ -29,27 +30,26 @@ public class QuickSort {
             while(arr[end] > key){
                 end --;
             }
-            //当开始结束指针相等或交错的时候跳出循环
-            if(end <= start){
+            //当开始结束指针相等的时候跳出循环
+            if(end == start){
                 break;
             }
+            //若开始结束指针没有相等, 就将开始结束指针指向的元素位置互换
             else {
                 temp = arr[start];
                 arr[start] = arr[end];
                 arr[end] = temp;
-                end --;
-                start ++;
             }
         }
-        if(start == end){
-            end --;
-            start ++;
-        }
+
+        //当结束指针还没指到数组首位时就继续进行分割数组递归排序
+        //开始指针要下移一位, 结束指针则要上移一位, 然后判断是否越界, 再进行递归
         if(end > low){
-            sortArray(arr, low, end);
+            sortArray(arr, low, end-1);
         }
+        //当开始指针还没指到数组末位时就继续进行分割数组递归排序
         if(start < high){
-            sortArray(arr, start, high);
+            sortArray(arr, start+1, high);
         }
     }
 }
