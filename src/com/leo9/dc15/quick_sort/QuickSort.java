@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class QuickSort {
     public static void main(String[] args) {
-        int[] arr = {11, 2, 6, 8, 47, 12, 96, 34, 207};
+        int[] arr = {11, 2, 6, -8, 47, 12, 96,207 ,34};
         System.out.println("=========select the mid ele as key===========");
         System.out.println("Origin Array -> " + Arrays.toString(arr));
         sortArray(arr, 0, arr.length - 1);
