@@ -35,6 +35,17 @@ public class EmpLinkList {
             return;
         }
         System.out.println("the info in the list is");
-        
+        EmpNode cur_node = head_node;
+        while(true){
+            //输出节点信息
+            System.out.printf("=> id = %d name = %s\t", cur_node.id, cur_node.name);
+            //判断当前节点下一位是否为空, 为空则跳出循环
+            if(cur_node.next_emp == null){
+                break;
+            }
+            //后移一位
+            cur_node = cur_node.next_emp;
+        }
+        System.out.println();
     }
 }
