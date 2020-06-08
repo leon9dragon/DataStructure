@@ -100,13 +100,15 @@ public class TreeNode {
         System.out.println(this);
     }
 
+    //计数器
     public static int preCount = 0;
     //前序查找方法
     public TreeNode preSearch(int target_no){
-        preCount++;
-        System.out.printf("the preCount is [%d]\n", preCount);
         //创建一个临时变量用以接收目标节点
         TreeNode target = null;
+        //在比较前计数器加一
+        preCount++;
+        System.out.printf("the preCount is [%d]\n", preCount);
         //先判断当前节点的 no 是否和目标 no 相等
         if (this.person_no == target_no){
             target = this;
@@ -127,6 +129,7 @@ public class TreeNode {
         return target;
     }
 
+    //计数器
     public static int infixCount = 0;
     //中序查找方法
     public TreeNode infixSearch(int target_no){
@@ -138,6 +141,7 @@ public class TreeNode {
             target = this.left_node.infixSearch(target_no);
         }
 
+        //在比较前计数器加一
         infixCount++;
         System.out.printf("the infixCount is [%d]\n", infixCount);
         //判断当前节点的 no 是否和目标 no 相等
@@ -154,6 +158,7 @@ public class TreeNode {
         return target;
     }
 
+    //计数器
     public static int postCount = 0;
     //后序查找方法
     public TreeNode postSearch(int target_no){
@@ -171,6 +176,7 @@ public class TreeNode {
             target = this.right_node.postSearch(target_no);
         }
 
+        //在比较前计数器加一
         postCount++;
         System.out.printf("the postCount is [%d]\n", postCount);
         //判断当前节点的 no 是否和目标 no 相等
