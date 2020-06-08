@@ -100,8 +100,11 @@ public class TreeNode {
         System.out.println(this);
     }
 
+    public static int preCount = 0;
     //前序查找方法
     public TreeNode preSearch(int target_no){
+        preCount++;
+        System.out.printf("the preCount is [%d]\n", preCount);
         //创建一个临时变量用以接收目标节点
         TreeNode target = null;
         //先判断当前节点的 no 是否和目标 no 相等
@@ -124,6 +127,7 @@ public class TreeNode {
         return target;
     }
 
+    public static int infixCount = 0;
     //中序查找方法
     public TreeNode infixSearch(int target_no){
         //创建一个临时变量用以接收目标节点
@@ -134,6 +138,8 @@ public class TreeNode {
             target = this.left_node.infixSearch(target_no);
         }
 
+        infixCount++;
+        System.out.printf("the infixCount is [%d]\n", infixCount);
         //判断当前节点的 no 是否和目标 no 相等
         //target 非空说明找到目标, 直接跳过即可
         if(target == null && this.person_no == target_no){
@@ -148,6 +154,7 @@ public class TreeNode {
         return target;
     }
 
+    public static int postCount = 0;
     //后序查找方法
     public TreeNode postSearch(int target_no){
         //创建一个临时变量用以接收目标节点
@@ -155,15 +162,17 @@ public class TreeNode {
 
         //如果当前节点的左子节点不为空, 则递归中序查找
         if (this.left_node != null){
-            target = this.left_node.infixSearch(target_no);
+            target = this.left_node.postSearch(target_no);
         }
 
         //如果当前节点的右子节点不为空, 则递归中序查找
         //target 非空说明找到目标, 直接跳过即可
         if (target == null && this.right_node != null){
-            target = this.right_node.infixSearch(target_no);
+            target = this.right_node.postSearch(target_no);
         }
 
+        postCount++;
+        System.out.printf("the postCount is [%d]\n", postCount);
         //判断当前节点的 no 是否和目标 no 相等
         //target 非空说明找到目标, 直接跳过即可
         if(target == null && this.person_no == target_no){

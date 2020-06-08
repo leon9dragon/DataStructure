@@ -37,18 +37,15 @@ public class TestDemoBT {
 
         //测试前序查找
         System.out.println("========test preSearch=======");
-        testTree.preSearch(5);
-        testTree.preSearch(8);
+        testTree.preSearch(3);
 
         //测试中序查找
         System.out.println("========test infixSearch=======");
-        testTree.infixSearch(6);
-        testTree.infixSearch(8);
+        testTree.infixSearch(3);
 
         //测试后续查找
         System.out.println("========test postSearch=======");
-        testTree.postSearch(7);
-        testTree.postSearch(8);
+        testTree.postSearch(3);
 
     }
 }
