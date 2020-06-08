@@ -99,4 +99,77 @@ public class TreeNode {
         //再输出当前节点
         System.out.println(this);
     }
+
+    //前序查找方法
+    public TreeNode preSearch(int target_no){
+        //创建一个临时变量用以接收目标节点
+        TreeNode target = null;
+        //先判断当前节点的 no 是否和目标 no 相等
+        if (this.person_no == target_no){
+            target = this;
+        }
+        //不相等, 则进入下面的判断
+        else{
+            //如果当前节点的左子节点不为空, 则递归前序查找
+            if(this.left_node != null){
+                target = this.left_node.preSearch(target_no);
+            }
+            //如果当前节点的右子节点不为空, 则递归前序查找
+            //target 非空说明找到目标, 直接跳过即可
+            if (target == null && this.right_node != null){
+                target = this.right_node.preSearch(target_no);
+            }
+        }
+        //如果当前节点的左右节点都不符合或者没有左右子节点, 则返回默认值 null
+        return target;
+    }
+
+    //中序查找方法
+    public TreeNode infixSearch(int target_no){
+        //创建一个临时变量用以接收目标节点
+        TreeNode target = null;
+
+        //如果当前节点的左子节点不为空, 则递归中序查找
+        if (this.left_node != null){
+            target = this.left_node.infixSearch(target_no);
+        }
+
+        //判断当前节点的 no 是否和目标 no 相等
+        //target 非空说明找到目标, 直接跳过即可
+        if(target == null && this.person_no == target_no){
+            target = this;
+        }
+
+        //如果当前节点的右子节点不为空, 则递归中序查找
+        //target 非空说明找到目标, 直接跳过即可
+        if (target == null && this.right_node != null){
+            target = this.right_node.infixSearch(target_no);
+        }
+        return target;
+    }
+
+    //后序查找方法
+    public TreeNode postSearch(int target_no){
+        //创建一个临时变量用以接收目标节点
+        TreeNode target = null;
+
+        //如果当前节点的左子节点不为空, 则递归中序查找
+        if (this.left_node != null){
+            target = this.left_node.infixSearch(target_no);
+        }
+
+        //如果当前节点的右子节点不为空, 则递归中序查找
+        //target 非空说明找到目标, 直接跳过即可
+        if (target == null && this.right_node != null){
+            target = this.right_node.infixSearch(target_no);
+        }
+
+        //判断当前节点的 no 是否和目标 no 相等
+        //target 非空说明找到目标, 直接跳过即可
+        if(target == null && this.person_no == target_no){
+            target = this;
+        }
+
+        return target;
+    }
 }

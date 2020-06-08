@@ -23,6 +23,7 @@ public class TestDemoBT {
         BinaryTree testTree = new BinaryTree();
         testTree.setRoot_node(nodeA);
 
+        /*
         //测试前序遍历
         System.out.println("========test preOrder=======");
         testTree.preOrder();
@@ -32,5 +33,22 @@ public class TestDemoBT {
         //测试后序遍历
         System.out.println("========test postOrder=======");
         testTree.postOrder();
+         */
+
+        //测试前序查找
+        System.out.println("========test preSearch=======");
+        testTree.preSearch(5);
+        testTree.preSearch(8);
+
+        //测试中序查找
+        System.out.println("========test infixSearch=======");
+        testTree.infixSearch(6);
+        testTree.infixSearch(8);
+
+        //测试后续查找
+        System.out.println("========test postSearch=======");
+        testTree.postSearch(7);
+        testTree.postSearch(8);
+
     }
 }

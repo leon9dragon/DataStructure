@@ -30,4 +30,43 @@ public class BinaryTree {
             this.root_node.postOrder();
         }
     }
+
+    //二叉树前序查找
+    public void preSearch(int target_no){
+        if(this.root_node != null){
+            TreeNode target = this.root_node.preSearch(target_no);
+            if (target != null){
+                System.out.printf("The target[no=%d] found which is %s\n", target_no, target.toString());
+            }
+            else {
+                System.out.printf("Can't found the target[no=%d]\n", target_no);
+            }
+        }
+    }
+
+    //二叉树中序查找
+    public void infixSearch(int target_no){
+        if(this.root_node != null){
+            TreeNode target = this.root_node.infixSearch(target_no);
+            if (target != null){
+                System.out.printf("The target[no=%d] found which is %s\n", target_no, target.toString());
+            }
+            else {
+                System.out.printf("Can't found the target[no=%d]\n", target_no);
+            }
+        }
+    }
+
+    //二叉树后序查找
+    public void postSearch(int target_no){
+        if(this.root_node != null){
+            TreeNode target = this.root_node.postSearch(target_no);
+            if (target != null){
+                System.out.printf("The target[no=%d] found which is %s\n", target_no, target.toString());
+            }
+            else {
+                System.out.printf("Can't found the target[no=%d]\n", target_no);
+            }
+        }
+    }
 }
