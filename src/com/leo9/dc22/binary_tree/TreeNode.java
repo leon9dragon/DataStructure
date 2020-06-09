@@ -1,6 +1,6 @@
 package com.leo9.dc22.binary_tree;
 
-//创建节点类, 用来存放节点信息和节点的左右子节点信息
+//创建结点类, 用来存放结点信息和结点的左右子结点信息
 public class TreeNode {
     //节点存放的信息
     private int person_no;
@@ -186,5 +186,42 @@ public class TreeNode {
         }
 
         return target;
+    }
+
+    //删除结点方法
+    public boolean delNode(int target_no){
+        //如果当前结点的左子结点不为空且是要删除的结点,
+        //直接将其左子结点置空为 null 即可, 并返回结束递归.
+        if(this.left_node != null && this.left_node.person_no == target_no){
+            this.left_node = null;
+            return true;
+        }
+
+        //如果当前结点的右子结点不为空且是要删除的结点,
+        //直接将其右子结点置空为 null 即可, 并返回结束递归.
+        if(this.right_node != null && this.right_node.person_no == target_no){
+            this.right_node = null;
+            return true;
+        }
+
+        boolean res = false;
+        //上述步骤都没有删除结点, 则向左子树进行递归删除
+        if(this.left_node != null){
+            res = this.left_node.delNode(target_no);
+            if(res){
+                return res;
+            }
+        }
+
+        //向左递归没有删除结点, 则向右子树进行递归删除
+        if(this.right_node != null){
+            res = this.right_node.delNode(target_no);
+            if(res){
+                return res;
+            }
+        }
+
+        //如果都没有删除结点, 则结点并不存在, 删除失败
+        return false;
     }
 }

@@ -69,4 +69,28 @@ public class BinaryTree {
             }
         }
     }
+
+    //二叉树删除结点
+    public void delNode(int target_no){
+        //先判断根结点是否为空树, 如果只有一个根结点, 则二叉树是空的.
+        if(root_node != null){
+            //再判断根结点是否为目标删除结点
+            if(root_node.getPerson_no() == target_no){
+                //如果是, 则置空当前二叉树即可
+                root_node = null;
+            }
+            else{
+                boolean res = root_node.delNode(target_no);
+                if(res){
+                    System.out.printf("deleted the node[no=%d]!\n", target_no);
+                }
+                else {
+                    System.out.printf("failed to delete the node[no=%d]!\n", target_no);
+                }
+            }
+        }
+        else {
+            System.out.println("the root is null!");
+        }
+    }
 }

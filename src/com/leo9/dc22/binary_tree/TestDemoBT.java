@@ -23,10 +23,11 @@ public class TestDemoBT {
         BinaryTree testTree = new BinaryTree();
         testTree.setRoot_node(nodeA);
 
-        /*
+
         //测试前序遍历
         System.out.println("========test preOrder=======");
         testTree.preOrder();
+        /*
         //测试中序遍历
         System.out.println("========test infixOrder=======");
         testTree.infixOrder();
@@ -47,5 +48,15 @@ public class TestDemoBT {
         System.out.println("========test postSearch=======");
         testTree.postSearch(4);
         */
+
+        //测试删除结点
+        System.out.println("========test delNode=======");
+        testTree.delNode(4);
+
+
+        //测试前序遍历
+        System.out.println("========test preOrder=======");
+        testTree.preOrder();
+
     }
 }
