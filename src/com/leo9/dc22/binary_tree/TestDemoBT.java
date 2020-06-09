@@ -33,7 +33,7 @@ public class TestDemoBT {
         //测试后序遍历
         System.out.println("========test postOrder=======");
         testTree.postOrder();
-         */
+
 
         //测试前序查找
         System.out.println("========test preSearch=======");
@@ -46,6 +46,6 @@ public class TestDemoBT {
         //测试后续查找
         System.out.println("========test postSearch=======");
         testTree.postSearch(4);
-
+        */
     }
 }
