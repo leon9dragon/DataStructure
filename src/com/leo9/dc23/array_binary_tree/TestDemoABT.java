@@ -5,6 +5,5 @@ public class TestDemoABT {
         int[] test_array = {1,3,6,8,10,14};
         ArrayBinaryTree arr_tree = new ArrayBinaryTree(test_array);
         arr_tree.infixOrder(0);
-
     }
 }
