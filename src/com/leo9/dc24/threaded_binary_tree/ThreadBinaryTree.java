@@ -52,6 +52,23 @@ public class ThreadBinaryTree {
         threadedNode(node.getRight_node());
     }
 
+    //遍历线索化二叉树
+    public void threadedList(){
+        TreeNode node_pointer = root_node;
+        while(node_pointer != null){
+            while(root_node.getLeft_type() == 0){
+                node_pointer = node_pointer.getLeft_node();
+            }
+            System.out.println(node_pointer);
+            while (node_pointer.getRight_type() == 1){
+                node_pointer = node_pointer.getRight_node();
+                System.out.println(node_pointer);
+            }
+            node_pointer = node_pointer.getRight_node();
+        }
+    }
+
+
     //二叉树前序遍历
     public void preOrder(){
         if(this.root_node != null){
