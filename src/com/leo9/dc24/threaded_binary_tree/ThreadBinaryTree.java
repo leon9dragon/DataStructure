@@ -56,7 +56,7 @@ public class ThreadBinaryTree {
     public void threadedList(){
         TreeNode node_pointer = root_node;
         while(node_pointer != null){
-            while(root_node.getLeft_type() == 0){
+            while(node_pointer.getLeft_type() == 0){
                 node_pointer = node_pointer.getLeft_node();
             }
             System.out.println(node_pointer);

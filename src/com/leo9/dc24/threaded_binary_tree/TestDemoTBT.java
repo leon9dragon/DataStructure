@@ -24,8 +24,11 @@ public class TestDemoTBT {
         testTree.threadedNode(node1);
 
         //以10号结点测试, 看其前驱和后继结点是否为3号和1号
-        System.out.println(node5.getLeft_node());
-        System.out.println(node5.getRight_node());
+//        System.out.println(node4.getLeft_node());
+//        System.out.println(node4.getRight_node());
+
+        System.out.println("=======show ThreadList======");
+        testTree.threadedList();
 
     }
 }
