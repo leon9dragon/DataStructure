@@ -5,8 +5,9 @@ import javafx.print.Collation;
 import java.util.*;
 
 public class HuffmanCode {
-    public static void main(String[] args) {
-        String sample_str = "i like like like java do you like a java";
+
+    //封装调用的方法
+    public static byte[] getHuffmanCodeByte(String sample_str) {
         //获取示例字符串的byte字节数组
         byte[] byte_arr = sample_str.getBytes();
         System.out.println("====================================");
@@ -34,6 +35,7 @@ public class HuffmanCode {
         System.out.println("the length of zip byte array: " + zip_byte_arr.length);
         System.out.println("the zip byte array: " + Arrays.toString(zip_byte_arr));
 
+        return zip_byte_arr;
     }
 
     //定义获取结点方法
