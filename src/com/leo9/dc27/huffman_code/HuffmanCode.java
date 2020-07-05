@@ -4,9 +4,10 @@ import javafx.print.Collation;
 
 import java.util.*;
 
+//构建哈夫曼编码类, 对字符串进行编码和压缩, 返回一个压缩过后的byte字节数组.
 public class HuffmanCode {
 
-    //封装调用的方法
+    //封装调用的方法, 最终返回一个压缩过后的byte字节数组
     public static byte[] getHuffmanCodeByte(String sample_str) {
         //获取示例字符串的byte字节数组
         byte[] byte_arr = sample_str.getBytes();
