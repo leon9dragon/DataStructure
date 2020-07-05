@@ -4,10 +4,10 @@ import javafx.print.Collation;
 
 import java.util.*;
 
-//构建哈夫曼编码类, 对字符串进行编码和压缩, 返回一个压缩过后的byte字节数组.
+//构建哈夫曼编码类, 对字符串对应的字节数组进行编码和压缩, 以及解码.
 public class HuffmanCode {
 
-    //封装调用的方法, 最终返回一个压缩过后的byte字节数组
+    //region 封装调用的方法, 最终返回一个压缩过后的byte字节数组
     public static byte[] getHuffmanCodeByte(String sample_str) {
         //获取示例字符串的byte字节数组
         byte[] byte_arr = sample_str.getBytes();
@@ -38,8 +38,9 @@ public class HuffmanCode {
 
         return zip_byte_arr;
     }
+    //endregion
 
-    //定义获取结点方法
+    //region 定义获取结点方法, 并将结点存放于一个结点列表当中
     private static List<TreeNode> getNodes(byte[] bytes) {
         //1. 创建一个ArrayList, 存放结点列表
         ArrayList<TreeNode> node_list = new ArrayList<TreeNode>();
@@ -63,8 +64,9 @@ public class HuffmanCode {
 
         return node_list;
     }
+    //endregion
 
-    //定义根据List来创建哈夫曼树的方法
+    //region 定义根据List结点列表来创建哈夫曼树的方法
     private static TreeNode createHuffmanTreeByList(List<TreeNode> nodes) {
         while (nodes.size() > 1) {
             //从小到大排序
@@ -86,8 +88,9 @@ public class HuffmanCode {
         //返回哈夫曼树的根结点
         return nodes.get(0);
     }
+    //endregion
 
-    //生成哈夫曼树对应的哈夫曼编码的过程
+    //region 生成哈夫曼树对应的哈夫曼编码
     //1. 将哈夫曼编码存放在一个Map当中, Map<Byte, String>
     //   形如 [32->01, 97->100, 100->11000]
     static Map<Byte, String> huffman_code = new HashMap<Byte, String>();
@@ -132,8 +135,9 @@ public class HuffmanCode {
         getHuffmanCode(the_root, "", leave_node_code);
         return huffman_code;
     }
+    //endregion
 
-    //编写方法来转换byte数组
+    //region 编写方法来转换byte数组
     //即将原byte数组根据生成的哈夫曼编码表来进行转换然后得到一个转码后的byte数组
 
     /**
@@ -194,4 +198,32 @@ public class HuffmanCode {
 
         return new_byte_array;
     }
+    //endregion
+
+    //region 编写方法来将一个byte转换成一个二进制字符串
+    /**
+     * @param flag 标志是否需要补高位, true则补位, false则不补位
+     * @param a_byte 传入的byte字节
+     * @return 是传入的byte对应的二进制字符串(注意是按照补码来操作的)
+     * */
+    private static String transByteToBitString(boolean flag, byte a_byte) {
+        //使用临时变量保存byte
+        int temp = a_byte;
+
+        //如果temp是正数还存在补高位的问题
+        if (flag) {
+            temp |= 256;
+        }
+
+        //用一个字符串去接受temp返回的二进制编码字符串
+        //但实际上返回的是temp对应的二进制码的补码
+        String str = Integer.toBinaryString(temp);
+
+        if (flag) {
+            return str.substring(str.length() - 8);
+        } else {
+            return str;
+        }
+    }
+    //endregion
 }
