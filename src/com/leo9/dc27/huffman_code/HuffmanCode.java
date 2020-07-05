@@ -7,10 +7,11 @@ import java.util.*;
 public class HuffmanCode {
     public static void main(String[] args) {
         String sample_str = "i like like like java do you like a java";
-        //获取示例字符串的字节数组
+        //获取示例字符串的byte字节数组
         byte[] byte_arr = sample_str.getBytes();
         System.out.println("====================================");
-        System.out.println("the byte array length:" + byte_arr.length);
+        System.out.println("the length of byte array: " + byte_arr.length);
+        System.out.println("the byte array: " + Arrays.toString(byte_arr));
 
         //将字节数组转换成结点列表
         List<TreeNode> node_list = getNodes(byte_arr);
@@ -23,9 +24,15 @@ public class HuffmanCode {
         huffman_tree_root.preOrder();
 
         //获取哈夫曼编码并存储在Map当中
-        Map<Byte,String> the_huffman_code = getHuffmanCode(huffman_tree_root);
+        Map<Byte, String> the_huffman_code = getHuffmanCode(huffman_tree_root);
         System.out.println("====================================");
         System.out.println("the huffman code is:\n" + the_huffman_code);
+
+        //根据哈夫曼编码表来取得新的压缩后的byte字节数组
+        byte[] zip_byte_arr = transByteArray(byte_arr, the_huffman_code);
+        System.out.println("====================================");
+        System.out.println("the length of zip byte array: " + zip_byte_arr.length);
+        System.out.println("the zip byte array: " + Arrays.toString(zip_byte_arr));
 
     }
 
@@ -125,30 +132,63 @@ public class HuffmanCode {
 
     //编写方法来转换byte数组
     //即将原byte数组根据生成的哈夫曼编码表来进行转换然后得到一个转码后的byte数组
+
     /**
      * @param origin_group 未被哈夫曼编码转换的原字节数组
      * @param huffman_code 上面步骤生成得到的哈夫曼编码表
      * @return 返回的是二进制字符串"10101000..."以8位为一组转换成byte数据的byte数组
-     *         即先将原来的byte数组的每一个成员根据哈夫曼编码先转成二进制的字符串
-     *         然后再将这个二进制字符串再以8位一组的形式, 再转换成一个压缩后的byte数组
-     * */
-    private static byte[] transByteArray(byte[] origin_group, Map<Byte, String> huffman_code){
+     * 即先将原来的byte数组的每一个成员根据哈夫曼编码先转成二进制的字符串
+     * 然后再将这个二进制字符串再以8位一组的形式, 再转换成一个压缩后的byte数组
+     */
+    private static byte[] transByteArray(byte[] origin_group, Map<Byte, String> huffman_code) {
         //1. 利用得到的哈夫曼编码表将原byte数组转换成二进制的转码字符串
         //1.1. 因为要拼接字符串, 因此先创建一个StringBuilder
         StringBuilder build_huffman_string = new StringBuilder();
         //1.2.遍历原byte数组
-        for(byte b: origin_group){
+        for (byte b : origin_group) {
             build_huffman_string.append(huffman_code.get(b));
         }
         //1.3.这里已经得到了对应的转码字符串了, 可进行输出测试.
         //    这个哈夫曼编码字符串是133长度
-        System.out.println("====================================\nthe huffman code string is:\n");
+        System.out.println("====================================\nthe huffman code string is:");
         System.out.println(build_huffman_string.toString());
-        System.out.println("the length of the huffman code string is: " + build_huffman_string.toString().length());
+        System.out.println("the length of the huffman code string is: " + build_huffman_string.length());
 
         //2. 将得到的哈夫曼编码字符串转换成byte数组以缩减长度
         //   转换后的byte数组长度是17, 长度从40缩减17, 压缩率57%
 
-        //2.1.
+        //2.1. 计算哈夫曼编码字符串模8后的结果, 能被整除或有余数.
+        //     根据不同的结果来得出不同的数组长度以创建新的byte数组
+        int new_array_length;
+        if (build_huffman_string.length() % 8 == 0) {
+            new_array_length = build_huffman_string.length() / 8;
+        } else {
+            new_array_length = build_huffman_string.length() / 8 + 1;
+        }
+
+        //2.2. 得出新的数组长度后, 即可创建新的byte数组, 用以存放转码压缩后的数据
+        //2.2.1. 先创建一个临时数组, 用以遍历存储数据.
+        //       同时创建一个数组索引, 用以记录存放数据的位置.
+        byte[] new_byte_array = new byte[new_array_length];
+        int array_index = 0;
+
+        //2.2.2. 遍历string builder并进行截取转码存入新的byte数组,
+        //       遍历的步长为8, 因为要每8位对应一个字节byte进行压缩.
+        for (int i = 0; i < build_huffman_string.length(); i = i + 8) {
+            String str2byte;
+            //每8位对哈夫曼编码字符串进行截取
+            //如果最后一次截取不足8位, 则直接从当前位置截取到末位即可
+            if (i + 8 > build_huffman_string.length()) {
+                str2byte = build_huffman_string.substring(i);
+            } else {
+                str2byte = build_huffman_string.substring(i, i + 8);
+            }
+
+            //将截取的字符串转码变为byte并存入新的byte数组当中, 存放一次索引后移一次.
+            new_byte_array[array_index] = (byte) Integer.parseInt(str2byte, 2);
+            array_index++;
+        }
+
+        return new_byte_array;
     }
 }
