@@ -41,7 +41,7 @@ public class HuffmanCode {
     //endregion
 
     //region 封装调用方法成为哈夫曼解码方法, 返回未经压缩的原byte字节数组
-    public static byte[] decodeHuffmanCodeByteArray(byte[] zip_byte_arr){
+    public static byte[] decodeHuffmanCodeByteArray(byte[] zip_byte_arr) {
         byte[] origin_byte_arr = decodeByteArray(huffman_code, zip_byte_arr);
         System.out.println("====================================");
         System.out.println("the length of origin byte arr: " + origin_byte_arr.length);
@@ -275,7 +275,9 @@ public class HuffmanCode {
         List<Byte> byte_list = new ArrayList<>();
 
         //2.3. 逐位对二进制字符串进行扫描, 并逐个对比反转编码表获取byte值
-        for (int i = 0; i < stringBuilder.length();) {
+        //定义字符串位置计数器, 从0开始, 要超出stringBuilder长度则终止循环
+        int sign_of_scan = 0;
+        while (sign_of_scan < stringBuilder.length()) {
             //定义循环标识符, 用以控制循环是否要结束.
             boolean sign = true;
 
@@ -285,10 +287,10 @@ public class HuffmanCode {
 
             while (sign) {
                 //递增的从二进制字符串中逐位取出一段key和翻转表进行匹配
-                String key = stringBuilder.substring(i, i + count);
+                String key = stringBuilder.substring(sign_of_scan, sign_of_scan + count);
                 the_byte = reverse_map.get(key);
                 //如果没有匹配到值, count自增, 然后继续循环
-                if(the_byte == null){
+                if (the_byte == null) {
                     count++;
                 }
                 //如果匹配到了值, 就结束while循环
@@ -299,7 +301,7 @@ public class HuffmanCode {
             //字节列表中加入匹配到的值
             byte_list.add(the_byte);
             //i也进行移位, 移到被截取位后一位
-            i += count;
+            sign_of_scan += count;
         }
 
         //3. 当for循环结束后, byte_list中就存储了所有的未压缩byte数组的成员
@@ -308,7 +310,7 @@ public class HuffmanCode {
         for (int i = 0; i < origin_byte_arr.length; i++) {
             origin_byte_arr[i] = byte_list.get(i);
         }
-        
+
         return origin_byte_arr;
     }
     //endregion
