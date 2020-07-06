@@ -13,7 +13,7 @@ public class HuffmanCode {
         byte[] byte_arr = sample_str.getBytes();
         System.out.println("====================================");
         System.out.println("the length of byte array: " + byte_arr.length);
-        System.out.println("the byte array: " + Arrays.toString(byte_arr));
+        System.out.println("the byte array: \n" + Arrays.toString(byte_arr));
 
         //将字节数组转换成结点列表
         List<TreeNode> node_list = getNodes(byte_arr);
@@ -200,6 +200,17 @@ public class HuffmanCode {
     }
     //endregion
 
+    //region 封装调用方法成为哈夫曼解码方法, 返回未经压缩的原byte字节数组
+    public static byte[] decodeHuffmanCodeByteArray(byte[] zip_byte_arr) {
+        byte[] origin_byte_arr = decodeByteArray(huffman_code, zip_byte_arr);
+        System.out.println("====================================");
+        System.out.println("the length of origin byte arr: " + origin_byte_arr.length);
+        System.out.println("the origin byte arr: \n" + Arrays.toString(origin_byte_arr));
+        System.out.println("the origin str: " + new String(origin_byte_arr));
+        return origin_byte_arr;
+    }
+    //endregion
+
     //region 编写方法来将一个byte转换成一个二进制字符串
 
     /**
@@ -225,17 +236,6 @@ public class HuffmanCode {
         } else {
             return str;
         }
-    }
-    //endregion
-
-    //region 封装调用方法成为哈夫曼解码方法, 返回未经压缩的原byte字节数组
-    public static byte[] decodeHuffmanCodeByteArray(byte[] zip_byte_arr) {
-        byte[] origin_byte_arr = decodeByteArray(huffman_code, zip_byte_arr);
-        System.out.println("====================================");
-        System.out.println("the length of origin byte arr: " + origin_byte_arr.length);
-        System.out.println("the origin byte arr: " + Arrays.toString(origin_byte_arr));
-        System.out.println("the origin str: " + new String(origin_byte_arr));
-        return origin_byte_arr;
     }
     //endregion
 
