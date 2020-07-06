@@ -7,8 +7,8 @@ import java.util.*;
 //构建哈夫曼编码类, 对字符串对应的字节数组进行编码和压缩, 以及解码.
 public class HuffmanCode {
 
-    //region 封装调用的方法, 最终返回一个压缩过后的byte字节数组
-    public static byte[] getHuffmanCodeByte(String sample_str) {
+    //region 封装调用的方法成为哈夫曼压缩方法, 最终返回一个压缩过后的byte字节数组
+    public static byte[] getHuffmanCodeByteArray(String sample_str) {
         //获取示例字符串的byte字节数组
         byte[] byte_arr = sample_str.getBytes();
         System.out.println("====================================");
@@ -37,6 +37,17 @@ public class HuffmanCode {
         System.out.println("the zip byte array: " + Arrays.toString(zip_byte_arr));
 
         return zip_byte_arr;
+    }
+    //endregion
+
+    //region 封装调用方法成为哈夫曼解码方法, 返回未经压缩的原byte字节数组
+    public static byte[] decodeHuffmanCodeByteArray(byte[] zip_byte_arr){
+        byte[] origin_byte_arr = decodeByteArray(huffman_code, zip_byte_arr);
+        System.out.println("====================================");
+        System.out.println("the length of origin byte arr: " + origin_byte_arr.length);
+        System.out.println("the origin byte arr: " + Arrays.toString(origin_byte_arr));
+        System.out.println("the origin str: " + new String(origin_byte_arr));
+        return origin_byte_arr;
     }
     //endregion
 
@@ -201,11 +212,12 @@ public class HuffmanCode {
     //endregion
 
     //region 编写方法来将一个byte转换成一个二进制字符串
+
     /**
-     * @param flag 标志是否需要补高位, true则补位, false则不补位
+     * @param flag   标志是否需要补高位, true则补位, false则不补位
      * @param a_byte 传入的byte字节
      * @return 是传入的byte对应的二进制字符串(注意是按照补码来操作的)
-     * */
+     */
     private static String transByteToBitString(boolean flag, byte a_byte) {
         //使用临时变量保存byte
         int temp = a_byte;
@@ -224,6 +236,80 @@ public class HuffmanCode {
         } else {
             return str;
         }
+    }
+    //endregion
+
+    //region 编写方法, 完成对二进制字符串的解码
+
+    /**
+     * @param huffman_code 哈夫曼编码表, Map键值对
+     * @param zip_byte_arr 经过哈夫曼编码表转码后得到的压缩byte数组
+     * @return 返回压缩byte数组解码过后的未被压缩的byte数组
+     */
+    private static byte[] decodeByteArray(Map<Byte, String> huffman_code, byte[] zip_byte_arr) {
+        //1. 先得到哈夫曼编码表对应的二进制字符串
+        //1.1. 将压缩过byte数组转换成二进制的字符串
+        StringBuilder stringBuilder = new StringBuilder();
+        boolean flag = true;
+        for (int i = 0; i < zip_byte_arr.length; i++) {
+            //如果是数组最后一位, 就不需要对其进行补位, 防止编码出错多出几位.
+            if (i == zip_byte_arr.length - 1) {
+                flag = false;
+            }
+            //将byte数组每一位获取到的二进制字符串进行拼接
+            stringBuilder.append(transByteToBitString(flag, zip_byte_arr[i]));
+        }
+        System.out.println("====================================");
+        System.out.println("the string of zip array is: " + stringBuilder.toString());
+
+        //2. 将字符串按照指定的哈夫曼编码表进行解码
+        //2.1. 将哈夫曼编码表进行键值对反转调换, 因为反向查询编码对应的char值
+        Map<String, Byte> reverse_map = new HashMap<String, Byte>();
+        for (Map.Entry<Byte, String> entry : huffman_code.entrySet()) {
+            reverse_map.put(entry.getValue(), entry.getKey());
+        }
+        System.out.println("====================================");
+        System.out.println("the reverse map is:\n" + reverse_map);
+
+        //2.2. 创建一个集合, 存放byte
+        List<Byte> byte_list = new ArrayList<>();
+
+        //2.3. 逐位对二进制字符串进行扫描, 并逐个对比反转编码表获取byte值
+        for (int i = 0; i < stringBuilder.length();) {
+            //定义循环标识符, 用以控制循环是否要结束.
+            boolean sign = true;
+
+            //定义一个Byte进行获取匹配值, 同时定义count来作为移位计数器
+            Byte the_byte = null;
+            int count = 1;
+
+            while (sign) {
+                //递增的从二进制字符串中逐位取出一段key和翻转表进行匹配
+                String key = stringBuilder.substring(i, i + count);
+                the_byte = reverse_map.get(key);
+                //如果没有匹配到值, count自增, 然后继续循环
+                if(the_byte == null){
+                    count++;
+                }
+                //如果匹配到了值, 就结束while循环
+                else {
+                    sign = false;
+                }
+            }
+            //字节列表中加入匹配到的值
+            byte_list.add(the_byte);
+            //i也进行移位, 移到被截取位后一位
+            i += count;
+        }
+
+        //3. 当for循环结束后, byte_list中就存储了所有的未压缩byte数组的成员
+        //3.1. 将byte_list转换为一个byte数组, 数组长度和byte_list的size相同
+        byte[] origin_byte_arr = new byte[byte_list.size()];
+        for (int i = 0; i < origin_byte_arr.length; i++) {
+            origin_byte_arr[i] = byte_list.get(i);
+        }
+        
+        return origin_byte_arr;
     }
     //endregion
 }
