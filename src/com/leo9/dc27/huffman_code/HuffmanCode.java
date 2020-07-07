@@ -2,6 +2,7 @@ package com.leo9.dc27.huffman_code;
 
 import javafx.print.Collation;
 
+import java.io.*;
 import java.util.*;
 
 //构建哈夫曼编码类, 对字符串对应的字节数组进行编码和压缩, 以及解码.
@@ -312,6 +313,114 @@ public class HuffmanCode {
         }
 
         return origin_byte_arr;
+    }
+    //endregion
+
+    //region 编写方法, 将一个文件进行压缩
+
+    /**
+     * @param srcFilePath 传入目标文件的路径
+     * @param dstFilePath 压缩后存放文件的路径
+     */
+    public static void zipFile(String srcFilePath, String dstFilePath) {
+        //定义一个文件输入流
+        FileInputStream is = null;
+        //定义一个文件输出流
+        OutputStream os = null;
+        ObjectOutputStream oos = null;
+        try {
+            //region 0. 先创建文件的输入流和输出流
+            //创建文件输入流
+            is = new FileInputStream(srcFilePath);
+            //创建文件输出流
+            os = new FileOutputStream(dstFilePath);
+            //endregion
+
+            //region 1. 对源文件进行压缩
+            //创建一个和源文件大小一致的字节数组
+            byte[] file_arr = new byte[is.available()];
+            //读取文件
+            is.read(file_arr);
+            //将字节数组转换成结点列表
+            List<TreeNode> node_list = getNodes(file_arr);
+            //根据结点列表生成哈夫曼树
+            TreeNode huffman_tree_root = createHuffmanTreeByList(node_list);
+            //获取哈夫曼编码并存储在Map当中
+            Map<Byte, String> the_huffman_code = getHuffmanCode(huffman_tree_root);
+            //根据哈夫曼编码表来取得新的压缩后的byte字节数组
+            byte[] zip_file_arr = transByteArray(file_arr, the_huffman_code);
+            //endregion
+
+            //region 输出并存放压缩文件
+            //创建一个和文件输出流关联的ObjectOutputStream
+            oos = new ObjectOutputStream(os);
+            //把哈夫曼编码后的字节数组写入压缩文件
+            oos.writeObject(zip_file_arr);
+            //以对象流的方式写入哈夫曼编码, 为了以后恢复源文件时使用, 一定要写入, 否则文件恢复不了
+            oos.writeObject(the_huffman_code);
+            //endregion
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                //关闭文件输入流
+                is.close();
+                //关闭文件输出流
+                os.close();
+                oos.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    //endregion
+
+    //region 编写方法完成对压缩文件的解压
+
+    /**
+     * @param zipFilePath 压缩文件的路径
+     * @param unzipToPath 解压后存放恢复文件的路径
+     */
+    public static void unzipFile(String zipFilePath, String unzipToPath) {
+        //定义文件的输入流
+        InputStream is = null;
+        //定义对象输入流
+        ObjectInputStream ois = null;
+        //定义文件的输出流
+        OutputStream os = null;
+
+        try {
+            //region 0. 先创建输入输出流, 并读取压缩后的字节数组和哈夫曼编码表
+            //创建文件输入流
+            is = new FileInputStream(zipFilePath);
+            //创建一个和is关联的对象输入流
+            ois = new ObjectInputStream(is);
+            //读取字节数组 zip_file_arr
+            byte[] zip_file_arr = (byte[]) ois.readObject();
+            //读取哈夫曼编码表 the_huffman_code
+            Map<Byte, String> the_huffman_code = (Map<Byte, String>) ois.readObject();
+            //endregion
+
+            //region 1. 对压缩后的字节数组进行解码同时恢复和输出文件
+            //对文件进行解码
+            byte[] origin_file_arr = decodeByteArray(the_huffman_code, zip_file_arr);
+            //将解码后的源文件数组输出
+            os = new FileOutputStream(unzipToPath);
+            os.write(origin_file_arr);
+            //endregion
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                //关闭文件输入输出流
+                os.close();
+                ois.close();
+                is.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
     //endregion
 }
