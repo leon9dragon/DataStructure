@@ -101,24 +101,33 @@ public class BinarySortTree {
             else {
                 //如果要删除的目标结点有左子结点
                 if (target_node.left_node != null) {
-                    //如果目标结点是其父结点的左子结点
-                    if (parent_node.left_node.value == node_val) {
-                        parent_node.left_node = target_node.left_node;
-                    }
-                    //如果目标结点是其父结点的右子结点
-                    else {
-                        parent_node.right_node = target_node.left_node;
+                    //如果删除的是根结点, 且恰好根结点下只有一个子结点, 则让子结点成为新的根结点
+                    if (parent_node != null) {
+                        //如果目标结点是其父结点的左子结点
+                        if (parent_node.left_node.value == node_val) {
+                            parent_node.left_node = target_node.left_node;
+                        }
+                        //如果目标结点是其父结点的右子结点
+                        else {
+                            parent_node.right_node = target_node.left_node;
+                        }
+                    } else {
+                        root_node = target_node.left_node;
                     }
                 }
                 //如果要删除的目标结点有右子结点
                 else {
-                    //如果目标结点是其父结点的左子结点
-                    if (parent_node.left_node.value == node_val) {
-                        parent_node.left_node = target_node.right_node;
-                    }
-                    //如果目标结点是其父结点的右子结点
-                    else {
-                        parent_node.right_node = target_node.right_node;
+                    if (parent_node != null) {
+                        //如果目标结点是其父结点的左子结点
+                        if (parent_node.left_node.value == node_val) {
+                            parent_node.left_node = target_node.right_node;
+                        }
+                        //如果目标结点是其父结点的右子结点
+                        else {
+                            parent_node.right_node = target_node.right_node;
+                        }
+                    } else {
+                        root_node = target_node.left_node;
                     }
                 }
             }
