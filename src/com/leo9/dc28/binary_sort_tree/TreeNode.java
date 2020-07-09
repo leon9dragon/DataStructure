@@ -65,4 +65,64 @@ public class TreeNode {
         }
     }
     //endregion
+
+    //region 查找要删除的结点
+
+    /**
+     * @param node_val 目标结点的value值
+     * @return 如果找到目标结点, 则返回目标结点, 否则返回null
+     */
+    public TreeNode searchTargetNode(int node_val) {
+        //与当前调用节点的值进行比较
+        //如果相等, 就返回当前调用结点
+        if (node_val == this.value) {
+            return this;
+        }
+        //如果小于当前调用结点的值, 则用当前结点的左子结点进行调用查找方法
+        else if (node_val < this.value) {
+            if (this.left_node != null) {
+                return this.left_node.searchTargetNode(node_val);
+            } else {
+                System.out.println("the target node is not existed!");
+                return null;
+            }
+        }
+        //如果大于当前调用结点的值, 则用当前结点的右子结点进行调用查找方法
+        else {
+            if (this.right_node != null) {
+                return this.right_node.searchTargetNode(node_val);
+            } else {
+                System.out.println("the target node is not existed!");
+                return null;
+            }
+        }
+    }
+    //endregion
+
+    //region 查找目标结点的父结点
+
+    /**
+     * @param node_val 目标结点本身的value值
+     * @return 要返回的目标结点的父结点, 如果没有则返回null
+     */
+    public TreeNode searchParentNode(int node_val) {
+        //如果当前结点的左(右)子结点不为空, 且它的左(右)子结点的值就等于目标值, 则当前结点是父结点
+        if ((this.left_node != null && this.left_node.value == node_val) || (this.right_node != null && this.right_node.value == node_val)) {
+            return this;
+        } else {
+            //如果查找的值小于等于当前结点的值, 且当前结点的左子结点非空, 则递归向左查找
+            if (this.left_node != null && node_val <= this.value) {
+                return this.left_node.searchParentNode(node_val);
+            }
+            //如果查找的值大于当前结点的值, 且当前结点的右子结点非空, 则递归向右查找
+            else if (this.right_node != null && node_val > this.value) {
+                return this.right_node.searchParentNode(node_val);
+            }
+            //如果上述条件都不满足, 则找不到父结点
+            else {
+                return null;
+            }
+        }
+    }
+    //endregion
 }
