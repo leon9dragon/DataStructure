@@ -10,6 +10,8 @@ public class GraphMatrix {
     private int[][] graph_edge_arr;
     //定义变量存储图中的边的数目
     private int edge_num;
+    //定义数组来记录某个结点是否已被访问
+    private boolean[] isVisited;
 
     //region 构造器, 参数是顶点数量
     public GraphMatrix(int vertex_num) {
@@ -20,6 +22,8 @@ public class GraphMatrix {
         graph_vertex_list = new ArrayList<String>(vertex_num);
         //因为一开始并不知道有多少条边, 初始化的时候为0即可(这一步不写也可以)
         edge_num = 0;
+        //定义记录数组的容量
+        isVisited = new boolean[vertex_num];
     }
     //endregion
 
@@ -48,39 +52,110 @@ public class GraphMatrix {
 
     //region 图中常用的方法
     //region 返回结点的个数
-    public int getVertexNum(){
+    public int getVertexNum() {
         //直接返回顶点集合的size即可
         return graph_vertex_list.size();
     }
     //endregion
 
     //region 返回边的数目
-    public int getEdgeNum(){
+    public int getEdgeNum() {
         //直接返回边的数目即可
         return edge_num;
     }
     //endregion
 
     //region 返回结点下标对应的结点数据, 例如 0 号结点对应结点数据为 "A"
-    public String getValByIndex(int vertex_index){
+    public String getValByIndex(int vertex_index) {
         return graph_vertex_list.get(vertex_index);
     }
     //endregion
 
     //region 返回vertex1和vertex2构成的边的权值
-    public int getEdgeWeight(int vertex1, int vertex2){
+    public int getEdgeWeight(int vertex1, int vertex2) {
         //直接返回二维数组的对应下标成员即可
         return graph_edge_arr[vertex1][vertex2];
     }
     //endregion
 
     //region 显示图所对应的邻接矩阵
-    public void showGraphMatrix(){
-        for(int[] link : graph_edge_arr){
+    public void showGraphMatrix() {
+        for (int[] link : graph_edge_arr) {
             System.out.println(Arrays.toString(link));
         }
     }
     //endregion
 
+    //endregion
+
+    //region 深度优先遍历的相关方法
+    //region 获取目标结点的第一个邻接结点的下标
+
+    /**
+     * @param target 目标结点的下标
+     * @return 遍历邻接矩阵找出与目标结点构成边的第一个结点,
+     * 有则返回第一个邻接结点下标;
+     * 没有则返回 -1.
+     */
+    public int getFirstNeighbour(int target) {
+        for (int i = 0; i < graph_vertex_list.size(); i++) {
+            if (graph_edge_arr[target][i] > 0) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    //endregion
+
+    //region 根据目标结点的前一个邻接结点的下标获取下一个邻接结点的下标
+
+    /**
+     * @param target        目标结点
+     * @param pre_neighbour 目标结点的上一个邻接结点的下标
+     * @return 若存在下一个邻接结点, 则返回其下标, 否则返回 -1
+     */
+    public int getNextNeighbour(int target, int pre_neighbour) {
+        for (int i = pre_neighbour + 1; i < graph_vertex_list.size(); i++) {
+            if (graph_edge_arr[target][i] > 0) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    //endregion
+
+    //region 深度优先遍历, 第一部分
+    private void searchByDepthFirst(boolean[] isVisited, int init_vertex) {
+        //先访问第一个结点, 并输出
+        System.out.printf("[%s] -> ", getValByIndex(init_vertex));
+        //将结点设置成已访问状态
+        isVisited[init_vertex] = true;
+        //获取初始结点的第一个邻接结点
+        int the_neighbour = getFirstNeighbour(init_vertex);
+        //判断这个邻接结点是否存在, 存在则开始循环
+        while (the_neighbour != -1) {
+            //如果这个结点没被访问过, 则递归遍历
+            if (!isVisited[the_neighbour]) {
+                searchByDepthFirst(isVisited, the_neighbour);
+            }
+            //如果这个节点已经访问过, 则寻找下一个邻接结点, 并替换当前邻接结点的下标
+            else {
+                the_neighbour = getNextNeighbour(init_vertex, the_neighbour);
+            }
+        }
+    }
+    //endregion
+
+    //region 深度优先遍历, 第二部分
+    //重载第一部分的方法, 用作当邻接结点不存在时的递归策略
+    //遍历所有的结点, 进行深度优先遍历, 默认初始结点为 0 号结点
+    public void searchByDepthFirst() {
+        for (int i = 0; i < getVertexNum(); i++) {
+            if (!isVisited[i]) {
+                searchByDepthFirst(isVisited, i);
+            }
+        }
+    }
+    //endregion
     //endregion
 }

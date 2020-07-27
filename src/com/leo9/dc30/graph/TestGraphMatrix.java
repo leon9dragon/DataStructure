@@ -21,6 +21,10 @@ public class TestGraphMatrix {
         graph_matrix.insertEdge(1,4,1);
 
         //列印邻接矩阵
+        System.out.println("===================");
         graph_matrix.showGraphMatrix();
+        //深度优先遍历
+        System.out.println("===================");
+        graph_matrix.searchByDepthFirst();
     }
 }
