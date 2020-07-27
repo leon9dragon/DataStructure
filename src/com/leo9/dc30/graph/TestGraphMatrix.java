@@ -26,5 +26,9 @@ public class TestGraphMatrix {
         //深度优先遍历
         System.out.println("===================");
         graph_matrix.searchByDepthFirst();
+        //广度优先遍历
+        System.out.println();
+        System.out.println("===================");
+        graph_matrix.searchByBoardFirst();
     }
 }

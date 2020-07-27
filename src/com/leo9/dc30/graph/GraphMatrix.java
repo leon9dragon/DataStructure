@@ -2,6 +2,7 @@ package com.leo9.dc30.graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class GraphMatrix {
     //定义一个 ArrayList 用来存储图中的顶点的数据集合
@@ -22,8 +23,6 @@ public class GraphMatrix {
         graph_vertex_list = new ArrayList<String>(vertex_num);
         //因为一开始并不知道有多少条边, 初始化的时候为0即可(这一步不写也可以)
         edge_num = 0;
-        //定义记录数组的容量
-        isVisited = new boolean[vertex_num];
     }
     //endregion
 
@@ -88,7 +87,7 @@ public class GraphMatrix {
 
     //endregion
 
-    //region 深度优先遍历的相关方法
+    //region 遍历中用到的通用方法
     //region 获取目标结点的第一个邻接结点的下标
 
     /**
@@ -123,8 +122,11 @@ public class GraphMatrix {
         return -1;
     }
     //endregion
+    //endregion
 
+    //region 深度优先遍历的相关方法
     //region 深度优先遍历, 第一部分
+    //对一个结点进行深度优先遍历
     private void searchByDepthFirst(boolean[] isVisited, int init_vertex) {
         //先访问第一个结点, 并输出
         System.out.printf("[%s] -> ", getValByIndex(init_vertex));
@@ -150,9 +152,62 @@ public class GraphMatrix {
     //重载第一部分的方法, 用作当邻接结点不存在时的递归策略
     //遍历所有的结点, 进行深度优先遍历, 默认初始结点为 0 号结点
     public void searchByDepthFirst() {
+        //定义记录数组的容量
+        isVisited = new boolean[graph_vertex_list.size()];
         for (int i = 0; i < getVertexNum(); i++) {
             if (!isVisited[i]) {
                 searchByDepthFirst(isVisited, i);
+            }
+        }
+    }
+    //endregion
+    //endregion
+
+    //region 广度优先遍历相关方法
+    //region 广度优先遍历, 第一部分
+    //对一个节点进行广度优先遍历
+    private void searchByBoardFirst(boolean[] isVisited, int init_vertex) {
+        //定义变量用以存放队列第一个结点的下标
+        int first_in_queue;
+        //定义变量用以存放邻接结点的下标
+        int neighbour_vertex;
+        //定义队列用以存储结点访问顺序
+        LinkedList queue = new LinkedList();
+        //输出访问结果
+        System.out.printf("[%s] -> ", getValByIndex(init_vertex));
+        //将结点标记为已访问
+        isVisited[init_vertex] = true;
+        //将结点加入队列尾部
+        queue.addLast(init_vertex);
+        //当队列不为空, 则开始循环出队找邻接结点
+        while (!queue.isEmpty()) {
+            //取出队列中第一个结点
+            first_in_queue = (Integer) queue.removeFirst();
+            //取出队列中第一个结点的第一个邻接结点下标
+            neighbour_vertex = getFirstNeighbour(first_in_queue);
+            //当邻接结点存在时
+            while (neighbour_vertex != -1) {
+                //如果邻接结点没有被访问过, 已被访问则跳过
+                if (!isVisited[neighbour_vertex]) {
+                    //输出这个邻接结点, 将其标记已访问并将其放入队列
+                    System.out.printf("[%s] -> ", getValByIndex(neighbour_vertex));
+                    isVisited[neighbour_vertex] = true;
+                    queue.addLast(neighbour_vertex);
+                }
+                //继续查找下一个邻接结点, 并替换当前邻接结点的下标
+                neighbour_vertex = getNextNeighbour(first_in_queue, neighbour_vertex);
+            }
+        }
+    }
+    //endregion
+    //region 广度优先遍历, 第二部分
+    //对所有结点都进行广度优先遍历
+    public void searchByBoardFirst(){
+        //定义记录数组的容量
+        isVisited = new boolean[graph_vertex_list.size()];
+        for (int i = 0; i < getVertexNum(); i++) {
+            if (!isVisited[i]) {
+                searchByBoardFirst(isVisited, i);
             }
         }
     }
