@@ -2,7 +2,7 @@ package com.leo9.dc32.tower_of_hanoi;
 
 public class TowerOfHanoi {
     public static void main(String[] args) {
-        hanoiTower(5,'A','B','C');
+        hanoiTower(5, 'A', 'B', 'C');
     }
 
     //汉诺塔的移动方案, 使用分治算法解决
