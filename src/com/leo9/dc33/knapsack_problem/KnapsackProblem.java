@@ -62,11 +62,13 @@ public class KnapsackProblem {
 
 
         //打印表格
+        System.out.println("=========the value sheet==========");
         for (int[] row : value_sheet) {
             System.out.println(Arrays.toString(row));
         }
 
         //输出最佳原目标结果, 本质上是取的几个最优解的组合
+        System.out.println("============the best choice=============");
         int i = store_path.length - 1;
         int j = store_path[0].length - 1;
         while (i > 0 && j > 0) {
