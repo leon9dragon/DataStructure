@@ -34,7 +34,16 @@ public class KMPMatch {
             if (pointer_k == -1 || char_array_P[pointer_k] == char_array_P[pointer_j]) {
                 pointer_k++;
                 pointer_j++;
-                next_array[pointer_j] = pointer_k;
+
+                //如果重定向位的字符和失配位字符并不一样, 则直接指向重定向位
+                if (char_array_P[pointer_j] != char_array_P[pointer_k]) {
+                    next_array[pointer_j] = pointer_k;
+                }
+                //如果重定向位的字符和失配位字符一样, 则继续递归跳转到重定向位的重定向位
+                //(但这种方式只能防一层重复失配)
+                else {
+                    next_array[pointer_j] = next_array[pointer_k];
+                }
             }
             //当以上两个条件不符合的时候, k 指针需要重定向
             else {
