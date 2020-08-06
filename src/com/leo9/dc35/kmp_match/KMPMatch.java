@@ -4,13 +4,15 @@ import java.util.Arrays;
 
 public class KMPMatch {
     public static void main(String[] args) {
-        String S="BBC ABCDAB ABCDABCDABDE";
-        String P="ABCDABD";
-        int res = matchByKMP(S,P);
-        if(res != -1){
-            System.out.printf("success! the position in string is [%d]\n", res);
-        }else {
-            System.out.println("can not match!");
+        String S = "BBC ABCDAB ABCDABCDABDE";
+        String P = "ABCDABD";
+        int res = matchByKMP(S, P);
+        System.out.println("===========the result of match===========");
+        if (res != -1) {
+            //指向字符串中的第几个字符从一开始, 而 res 是字符数组的下标从零开始, 因此加一即可.
+            System.out.printf("success! the position in string is [%d]\n", res + 1);
+        } else {
+            System.out.println("failed! can not match!");
         }
     }
 
@@ -47,6 +49,9 @@ public class KMPMatch {
     public static int matchByKMP(String S, String P) {
         //获取 next 数组
         int[] next_array = getNextArray(P);
+
+        System.out.println("===========the next array===========");
+        System.out.println(Arrays.toString(next_array));
 
         //先将字符串都转换成字符数组
         char[] char_array_S = S.toCharArray();
