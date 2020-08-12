@@ -57,6 +57,7 @@ public class PrimAlgorithm {
         //将最小值初始化一个较大的数, 后面遍历的时候会被替换
         int min_weight = 10000;
 
+        System.out.println("==============the chosen sides===============");
         //开始循环遍历, 因为最小连通子图的边数为 vertex_num-1
         //因此 k 初始值为 1, 遍历结束后就能获取顶点数减一条边
         for (int k = 1; k < map_graph.vertex_num; k++) {
@@ -85,6 +86,8 @@ public class PrimAlgorithm {
             min_route += map_graph.side_weight[h1][h2];
             //本轮新增边的另一个未被访问的端点记录已访问
             vertex_visited[h2] = 1;
+            //输出边
+            System.out.printf("the side <%c,%c> is chosen, length = [%d]\n", map_graph.vertex_data[h1], map_graph.vertex_data[h2], map_graph.side_weight[h1][h2]);
             //min_weight 重置, 防止后续对比出错
             min_weight = 10000;
         }
