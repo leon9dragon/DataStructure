@@ -37,8 +37,8 @@ public class MapGraph {
     }
 
     //显示图的邻接矩阵
-    public void showGraph(){
-        for(int[] row: this.side_weight){
+    public void showGraph() {
+        for (int[] row : this.side_weight) {
             System.out.println(Arrays.toString(row));
         }
     }
