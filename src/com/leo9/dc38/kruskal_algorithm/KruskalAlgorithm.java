@@ -58,7 +58,18 @@ public class KruskalAlgorithm {
 
     public void showMatrix() {
         System.out.println("==========show matrix===========");
+        for (int i = 0; i < 7; i++) {
+            if (i == 0) {
+                System.out.printf("%10c", 'A' + i);
+            } else {
+                System.out.printf("%5c", 'A' + i);
+            }
+        }
+        System.out.println();
+        int index = 0;
         for (int[] row : graph_matrix) {
+            System.out.printf("%5c", 'A' + index);
+            index++;
             for (int data : row) {
                 if (data == INF) {
                     System.out.printf("%5s", "INF");
