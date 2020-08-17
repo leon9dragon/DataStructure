@@ -65,7 +65,7 @@ public class Graph {
         vertex_visited = new VertexVisited(vertex_data.length, start_index);
         //更新出发点到周围邻接点的距离
         updateData(start_index);
-        //然后循环更新距离, 因为上面已经有一个点被访问过了, 所以 i 从 1 开始
+        //然后循环更新起点和距离, 因为上面已经有一个点被访问过了, 所以 i 从 1 开始
         for (int i = 1; i < vertex_data.length; i++) {
             start_index = vertex_visited.updateStartPoint();
             updateData(start_index);
