@@ -24,6 +24,6 @@ public class DijkstraAlgorithm {
         //输出图的邻接矩阵
         graph_case.showGraph();
         //输出最短路径结果, 起点为 G 下标为 6
-        graph_case.getMinRoute(6);
+        graph_case.getMinRoute(3);
     }
 }

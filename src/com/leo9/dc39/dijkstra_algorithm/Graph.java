@@ -1,5 +1,6 @@
 package com.leo9.dc39.dijkstra_algorithm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 //创建图类
@@ -10,6 +11,8 @@ public class Graph {
     private int[][] graph_matrix;
     //创建内置的顶点访问对象作为属性
     private VertexVisited vertex_visited;
+    //定义边集合
+    private ArrayList<SideRecord> side_record = new ArrayList<SideRecord>();
 
     //定义构造函数
     public Graph(char[] vertex_data, int[][] graph_matrix) {
@@ -51,9 +54,21 @@ public class Graph {
             new_distance = vertex_visited.getDis(vertex_index) + graph_matrix[vertex_index][i];
 
             //进行判断, 如果下一顶点未被访问过且当前新的距离比上次出发点到下一顶点的距离要小, 则进行距离更新
+            //注意: 出发点一般来说都没有前驱结点, 在Integer数组中对应的前驱结点为NULL
             if (!vertex_visited.visitedOrNot(i) && new_distance < vertex_visited.getDis(i)) {
                 vertex_visited.updatePre(i, vertex_index);
                 vertex_visited.updateDis(i, new_distance);
+
+                //这里加入对最小连通路径的记录, 记录每一条用于连通出发点到终点的连接边
+                //删除被记录的边中重复结束端的边, 因为有比它更小的边加入了
+                for (int j = 0; j < side_record.size(); j++) {
+                    if (side_record.get(j).end_point == vertex_data[i]) {
+                        side_record.remove(j);
+                    }
+                }
+
+                //记录每一条被选中的边
+                side_record.add(new SideRecord(vertex_data[vertex_index], vertex_data[i], graph_matrix[vertex_index][i]));
             }
         }
     }
@@ -71,11 +86,19 @@ public class Graph {
             updateData(start_index);
         }
         //输出结果
+        showResult();
+    }
+
+    //定义方法输出最终结果
+    public void showResult() {
         System.out.println("===========show result===========");
+        System.out.printf("%-15s", "the_vertex");
         for (char data : vertex_data) {
             System.out.printf("%-4c", data);
         }
         System.out.println();
+
+        System.out.printf("%-15s", "last_vertex");
         for (Integer data : vertex_visited.pre_visited) {
             if (data != null) {
                 System.out.printf("%-4d", data);
@@ -84,8 +107,20 @@ public class Graph {
             }
         }
         System.out.println();
+
+        System.out.printf("%-15s", "min_route");
         for (int data : vertex_visited.dis_arr) {
             System.out.printf("%-4d", data);
         }
+        System.out.println("\nNOTICE: this min route is the route from start point to end point!");
+        System.out.println("EXAMPLE: route(G->C) = route(G->A) + route(A->C) = 2 + 7 = 9");
+
+        System.out.println("===========show sides===========");
+        int min_route = 0;
+        for (int i = 0; i < side_record.size(); i++) {
+            System.out.println(side_record.get(i));
+            min_route += side_record.get(i).side_weight;
+        }
+        System.out.printf("\nall route = [%d]\n", min_route);
     }
 }
