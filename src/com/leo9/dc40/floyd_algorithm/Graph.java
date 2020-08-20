@@ -24,11 +24,28 @@ public class Graph {
     }
 
     //实现弗洛伊德算法
-    public void getRouteByFloydAlgorithm(){
-
+    public void getRouteByFloydAlgorithm() {
+        //定义临时变量保存最短路径
+        int temp_route = 0;
+        //开始三层循环, 第一层循环选的是中间顶点
+        for (int k = 0; k < vertex_route.length; k++) {
+            //第二层循环选的是出发顶点
+            for (int i = 0; i < vertex_route.length; i++) {
+                //第三层选择的是结束顶点
+                for (int j = 0; j < vertex_route.length; j++) {
+                    //获取顶点经过中间点再到终点的路径长度, 并赋给临时路径
+                    temp_route = vertex_route[i][k] + vertex_route[k][j];
+                    //然后用临时路径和起点到终点直连的路径比较
+                    if (temp_route < vertex_route[i][j]) {
+                        //如果临时路径比直连路径小, 则将直连路径重置为最小的临时路径
+                        vertex_route[i][j] = temp_route;
+                        //同时更新前驱结点
+                        vertex_pre[i][j] = vertex_pre[k][j];
+                    }
+                }
+            }
+        }
     }
-
-
 
 
     //定义方法, 显示距离矩阵和前驱结点数组

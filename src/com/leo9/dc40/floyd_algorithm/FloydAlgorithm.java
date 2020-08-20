@@ -16,6 +16,7 @@ public class FloydAlgorithm {
         vertex_route[6] = new int[]{2, 3, N, N, 4, 6, 0};
 
         Graph graph_case = new Graph(vertex_data,vertex_route);
+        graph_case.getRouteByFloydAlgorithm();
         graph_case.showArray();
     }
 }
