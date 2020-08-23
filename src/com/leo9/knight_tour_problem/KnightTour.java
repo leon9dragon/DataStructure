@@ -3,6 +3,7 @@ package com.leo9.knight_tour_problem;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class KnightTour {
     //定义棋盘的行和列, X 为列数, Y 为行数
@@ -39,7 +40,7 @@ public class KnightTour {
         System.out.println("===========show the board===========");
         for (int[] row : chess_board) {
             System.out.printf("%3c", '[');
-            for(int data : row){
+            for (int data : row) {
                 System.out.printf("%3d", data);
             }
             System.out.printf("%3c", ']');
@@ -105,6 +106,30 @@ public class KnightTour {
         return point_list;
     }
 
+    //先获取当前位置可以走的下一个位置的集合, 即 point_list
+    //然后获取 point_list 中所有的 point 的下一步的选择的所有集合,
+    //对这个集合根据集合成员的数量进行非递减排序.
+    public static void sortArrayList(ArrayList<Point> point_list) {
+        point_list.sort(new Comparator<Point>() {
+            @Override
+            public int compare(Point o1, Point o2) {
+                //获取点o1的下一步的所有位置的个数
+                int count1 = getNextPoint(o1).size();
+
+                //获取点o2的下一步的所有位置的个数
+                int count2 = getNextPoint(o2).size();
+
+                if (count1 < count2) {
+                    return -1;
+                } else if (count1 == count2) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        });
+    }
+
     /**
      * 完成马踏棋盘算法
      *
@@ -124,6 +149,9 @@ public class KnightTour {
         //获取当前位置可以走的下一个位置的集合
         //列对应横坐标, 行对应纵坐标
         ArrayList<Point> next_point = getNextPoint(new Point(cur_col, cur_row));
+
+        //对 next_point 集合中所有的成员的下一步的位置的数目进行非递减排序
+        sortArrayList(next_point);
 
         //遍历下一个位置的集合, 集合不为空就能继续遍历.
         while (!next_point.isEmpty()) {
