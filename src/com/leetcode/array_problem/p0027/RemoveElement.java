@@ -4,12 +4,12 @@ import java.util.Arrays;
 
 public class RemoveElement {
     public static void main(String[] args) {
-        int[] nums = {0, 1, 2, 2, 3, 0, 4, 2, 2};//{0, 1, 2, 2, 3, 0, 4, 2}{3, 2, 2, 3}
+        int[] nums = {3, 2, 2, 3};//{0, 1, 2, 2, 3, 0, 4, 2}
         System.out.println("========================");
         System.out.println("length of origin array = " + nums.length);
         System.out.println("origin array = " + Arrays.toString(nums));
 
-        int target = 2;
+        int target = 3;
         int res = removeElement(nums, target);
         System.out.println();
         System.out.println("the target = " + target);
