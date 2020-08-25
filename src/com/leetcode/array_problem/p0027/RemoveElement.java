@@ -28,9 +28,15 @@ public class RemoveElement {
 
     public static int removeElement(int[] nums, int val) {
         if (nums.length == 0) return 0;
+        //define two pointer
+        //one is pointed to the head of array, from head to tail
+        //another is pointed to the tail of array, which is equals to array's length
         int pointer = 0;
         int length = nums.length;
+
+        //so the pointer should be less than array's length to avoid being out of bound
         while (pointer < length) {
+            //when we find a duplicate the length sub 1
             if (nums[pointer] == val) {
                 nums[pointer] = nums[length - 1];
                 length--;
