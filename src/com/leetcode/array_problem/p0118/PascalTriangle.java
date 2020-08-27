@@ -10,7 +10,10 @@ public class PascalTriangle {
     public static void main(String[] args) {
         //System.out.println(new ArrayList<Integer>(Arrays.asList(1,2,3)));
         List<List<Integer>> list = generate(7);
-        System.out.println(list);
+        System.out.println("==============================");
+        for(List temp: list){
+            System.out.println(temp);
+        }
     }
 
     public static List<List<Integer>> generate(int numRows) {
