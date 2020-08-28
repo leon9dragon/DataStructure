@@ -1,10 +1,8 @@
-package com.leetcode.array_problem.p0121;
+package com.leetcode.array_problem.p0122;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
-public class BestTimeToBuyAndSellStock {
+public class BestTimeToBuyAndSellStock2 {
     public static void main(String[] args) {
         int[] prices = {7, 6, 4, 3, 1};
         int getProfit = maxProfit(prices);
@@ -23,10 +21,12 @@ public class BestTimeToBuyAndSellStock {
         for (int i = 0; i < prices.length; i++) {
             if (prices[i] < minPrice) {
                 minPrice = prices[i];
-            } else if (prices[i] - minPrice > maxProfit) {
-                maxProfit = prices[i] - minPrice;
+            } else if (prices[i] > minPrice) {
+                maxProfit += prices[i] - minPrice;
+                minPrice = prices[i];
             }
         }
+
         return maxProfit;
     }
 }
