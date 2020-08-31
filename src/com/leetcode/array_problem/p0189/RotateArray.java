@@ -16,7 +16,9 @@ public class RotateArray {
         if (k == 0) return;
         int len = nums.length;
         int index = 0;
-        int temp1 = 0, temp2 = 0;
+        int temp1 = 0;
+        int temp2 = 0;
+        int count = 1;
         for (int i = 0; i < len; i++) {
             if (i == 0) {
                 temp1 = nums[(index + k) % len];
@@ -27,6 +29,11 @@ public class RotateArray {
                 nums[(index + k) % len] = temp2;
             }
             index = (index + k) % len;
+
+            if (index == 0) {
+                index = count;
+                count++;
+            }
         }
     }
 }
