@@ -10,21 +10,18 @@ public class SortArrayByParity {
 
     public static int[] sortArrayByParity(int[] A) {
         Arrays.sort(A);
-        ArrayList<Integer> even_list = new ArrayList<>();
-        ArrayList<Integer> odd_list = new ArrayList<>();
+        int[] B = new int[A.length];
+        int h_pointer = 0;
+        int t_pointer = A.length - 1;
         for (int index = 0; index < A.length; index++) {
             if (A[index] % 2 == 0) {
-                even_list.add(A[index]);
-            } else {
-                odd_list.add(A[index]);
+                B[h_pointer] = A[index];
+                h_pointer++;
+            }else {
+                B[t_pointer] = A[index];
+                t_pointer--;
             }
         }
-
-        even_list.addAll(odd_list);
-
-        for (int index = 0; index < even_list.size(); index++) {
-            A[index] = even_list.get(index);
-        }
-        return A;
+        return B;
     }
 }
