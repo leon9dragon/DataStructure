@@ -9,7 +9,6 @@ public class SortArrayByParity {
     }
 
     public static int[] sortArrayByParity(int[] A) {
-        Arrays.sort(A);
         int[] B = new int[A.length];
         int h_pointer = 0;
         int t_pointer = A.length - 1;
