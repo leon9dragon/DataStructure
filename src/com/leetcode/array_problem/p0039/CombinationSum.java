@@ -24,16 +24,19 @@ public class CombinationSum {
     }
 
     public static void recursion(int sum, int target, int num, int[] arr, ArrayList list, HashSet<List<Integer>> resList) {
-        sum += num;
-        list.add(num);
+        sum += arr[index];
+        list.add(arr[index]);
+        
         if (sum == target) {
-            resList.add(list);
+            resList.add(new ArrayList(list));
         }
+        
         if (sum < target) {
-            for (int i = 0; i < arr.length; i++) {
-                recursion(sum, target, arr[i], arr, list, resList);
+            for (int i = index; i < arr.length; i++) {
+                recursion(sum, target, i, arr, list, resList);
             }
         }
+        list.remove(list.size() - 1);
         return;
     }
 }
