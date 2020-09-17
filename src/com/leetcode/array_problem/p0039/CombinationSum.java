@@ -18,12 +18,12 @@ public class CombinationSum {
     public static List<List<Integer>> combinationSum(int[] candidates, int target) {
         HashSet<List<Integer>> resList = new HashSet<>();
         for (int index = 0; index < candidates.length; index++) {
-            recursion(0, target, candidates[index], candidates, new ArrayList(), resList);
+            recursion(0, target, index, candidates, new ArrayList(), resList);
         }
         return new ArrayList<>(resList);
     }
 
-    public static void recursion(int sum, int target, int num, int[] arr, ArrayList list, HashSet<List<Integer>> resList) {
+    public static void recursion(int sum, int target, int index, int[] arr, ArrayList list, HashSet<List<Integer>> resList) {
         sum += arr[index];
         list.add(arr[index]);
         

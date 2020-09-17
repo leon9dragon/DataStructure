@@ -1,6 +1,5 @@
 package com.leo9.dc27.huffman_code;
 
-import javafx.print.Collation;
 
 import java.io.*;
 import java.util.*;
