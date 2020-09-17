@@ -16,23 +16,24 @@ public class CombinationSum {
     }
 
     public static List<List<Integer>> combinationSum(int[] candidates, int target) {
-        Set hashSet = new HashSet<>();
-        for (int i = 0; i < candidates.length; i++) {
-            hashSet.add(candidates[i]);
-        }
-        Set<List<Integer>> resList = new HashSet<>();
-        int remainder, round;
+        HashSet<List<Integer>> resList = new HashSet<>();
         for (int index = 0; index < candidates.length; index++) {
-            remainder = target;
-            round = 0;
-            while (remainder >= 0) {
+            recursion(0, target, candidates[index], candidates, new ArrayList(), resList);
+        }
+        return new ArrayList<>(resList);
+    }
 
-                
-
-                remainder -= candidates[index];
+    public static void recursion(int sum, int target, int num, int[] arr, ArrayList list, HashSet<List<Integer>> resList) {
+        sum += num;
+        list.add(num);
+        if (sum == target) {
+            resList.add(list);
+        }
+        if (sum < target) {
+            for (int i = 0; i < arr.length; i++) {
+                recursion(sum, target, arr[i], arr, list, resList);
             }
         }
-
-        return new ArrayList<>(resList);
+        return;
     }
 }
