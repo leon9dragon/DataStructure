@@ -12,7 +12,8 @@ public class SpiralMatrix {
         List<Integer> resList = new ArrayList<>();
         int ele_num = matrix.length * matrix[0].length;
         int count = 0;
-        int h_ptr
+        int h_ptr = 0;
+        int t_ptr = matrix[0].length;
         while (count <= ele_num) {
 
             count++;
