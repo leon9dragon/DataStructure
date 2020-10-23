@@ -8,10 +8,7 @@ import java.util.Set;
 public class SpiralMatrix {
     public static void main(String[] args) {
         int[][] test = {
-                {1,  2,  3,  4},
-                {12, 13, 14, 5},
-                {11, 16, 15, 6},
-                {10, 9,  8,  7}
+                {1, 2, 3, 4}
         };
         List<Integer> resList = spiralOrder(test);
         System.out.println(resList);
@@ -19,6 +16,9 @@ public class SpiralMatrix {
 
     public static List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> resList = new ArrayList<>();
+
+        if (matrix.length == 0) return resList;
+
         int row_ptr = 0;
         int col_ptr = 0;
 
@@ -27,10 +27,10 @@ public class SpiralMatrix {
         int count = 0;
 
         int round = 0;
-        final int all_round = matrix.length + matrix[0].length - 1;
+        int ele_count = matrix.length * matrix[0].length;
 
 
-        while (round < all_round) {
+        while (ele_count > 0) {
             switch (round % 4) {
                 case 0:
                     while (count < row_ul) {
@@ -38,6 +38,7 @@ public class SpiralMatrix {
                         col_ptr++;
                         count++;
                     }
+                    ele_count -= row_ul;
                     col_ptr--;
                     row_ptr++;
                     row_ul--;
@@ -50,6 +51,7 @@ public class SpiralMatrix {
                         row_ptr++;
                         count++;
                     }
+                    ele_count -= col_ul;
                     row_ptr--;
                     col_ptr--;
                     col_ul--;
@@ -62,6 +64,7 @@ public class SpiralMatrix {
                         col_ptr--;
                         count++;
                     }
+                    ele_count -= row_ul;
                     col_ptr++;
                     row_ptr--;
                     row_ul--;
@@ -74,6 +77,7 @@ public class SpiralMatrix {
                         row_ptr--;
                         count++;
                     }
+                    ele_count -= col_ul;
                     row_ptr++;
                     col_ptr++;
                     col_ul--;
