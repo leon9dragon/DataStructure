@@ -8,7 +8,8 @@ import java.util.Set;
 public class SpiralMatrix {
     public static void main(String[] args) {
         int[][] test = {
-                {1, 2, 3, 4}
+                {1, 2, 3, 4},
+                {12,13,14,5}
         };
         List<Integer> resList = spiralOrder(test);
         System.out.println(resList);
