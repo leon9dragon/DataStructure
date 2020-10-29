@@ -1,30 +1,31 @@
 package com.leetcode.array_problem.p0055;
 
+import java.util.Arrays;
+
 public class JumpGame {
     public static void main(String[] args) {
-        int[] nums = {3, 2, 1, 0, 4};
+        int[] nums = {3, 2, 1, 1, 4};
         System.out.println(canJump(nums));
     }
 
 
     public static boolean canJump(int[] nums) {
-        int cur_index = 0;
-        return recursion(nums, cur_index);
-    }
+        if (nums.length == 0) return false;
 
-    public static boolean recursion(int[] nums, int cur_index) {
-        int step = nums[cur_index];
+        int ele_ptr = nums.length - 1;
+        int g_ptr = nums.length - 1;
+        int[] status_arr = new int[nums.length];
 
-        if (cur_index + step >= nums.length - 1) {
-            return true;
+        while (ele_ptr >= 0) {
+            if ((nums[ele_ptr] + ele_ptr) >= g_ptr) {
+                status_arr[ele_ptr] = 1;
+                g_ptr = ele_ptr;
+            }
+            ele_ptr--;
         }
 
-        while (step > 0) {
-            if(recursion(nums, cur_index + step)) return true;
-            step--;
-        }
-
-        return false;
+        return (status_arr[0] == 1);
     }
+
 
 }
