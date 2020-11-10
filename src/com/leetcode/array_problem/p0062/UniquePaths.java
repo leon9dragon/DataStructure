@@ -2,7 +2,7 @@ package com.leetcode.array_problem.p0062;
 
 public class UniquePaths {
     public static void main(String[] args) {
-        int res = uniquePaths(51, 9);
+        int res = uniquePaths(3, 3);
         System.out.printf("There are [%d] unique paths!", res);
     }
 
