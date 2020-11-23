@@ -9,7 +9,8 @@ public class MinimumSizeSubarraySum {
         if (nums == null || nums.length < 1)
             return 0;
 
-        int start = 0, end = 0, sum = 0, min = Integer.MAX_VALUE;
+        int start = 0, end = 0, sum = 0,
+                min = Integer.MAX_VALUE;
 
         while (end < nums.length) {
             sum += nums[end];
