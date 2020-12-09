@@ -1,5 +1,7 @@
 package com.leetcode.linkedlist_problem.p0143;
 
+import java.util.Stack;
+
 /**
  * Definition for singly-linked list.
  */
@@ -28,19 +30,33 @@ public class ReorderList {
 
     public void reorderList(ListNode head) {
         if (head == null || head.next == null) return;
-        int count = 0;
+
+        Stack<ListNode> listReverse = new Stack<>();
         ListNode ptr = head;
         while (ptr != null) {
-            count++;
+            listReverse.push(ptr);
             ptr = ptr.next;
         }
 
-        int re_inedx;
-        if (count % 2 == 0) {
-            re_inedx = count / 2 + 1;
-        } else {
-            re_inedx = count / 2 + 2;
+        int nodeCount = listReverse.size();
+        int moveCount = nodeCount - (nodeCount / 2 + 1);
+
+        ListNode temp = null;
+        ListNode next = null;
+        ptr = head;
+
+        while (moveCount > 0) {
+            temp = listReverse.pop();
+            next = ptr.next;
+            ptr.next = temp;
+            temp.next = next;
+            ptr = next;
+            moveCount--;
         }
-        count = 1;
+        
+        while (ptr.next != temp) {
+            ptr = ptr.next;
+        }
+        ptr.next = null;
     }
 }
