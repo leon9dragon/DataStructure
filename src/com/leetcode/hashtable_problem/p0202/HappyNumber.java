@@ -7,42 +7,31 @@ import java.util.Set;
 
 public class HappyNumber {
     public static void main(String[] args) {
-        int n = 1;
-        System.out.printf("The result of if [%d] is happy number is [%s]", n, isHappy(n));
+        int n = 2;
+        System.out.printf("The result of if [%d] is happy number is [%s]", n, new HappyNumber().isHappy(n));
     }
 
-    public static boolean isHappy(int n) {
+    public boolean isHappy(int n) {
         int pro_sum = n;
-        List<Integer> digits;
         Set<Integer> res = new HashSet<>();
         while (true) {
             if (!res.contains(pro_sum)) {
                 System.out.println(pro_sum);
                 res.add(pro_sum);
-            }
-            else {
+            } else {
                 if (pro_sum == 1) return true;
                 else return false;
             }
-            digits = new HappyNumber().getDigits(pro_sum);
-            pro_sum = new HappyNumber().getProductSum(digits);
+            pro_sum = getProductSum(pro_sum);
         }
     }
 
-    public List<Integer> getDigits(int n) {
-        List<Integer> digits = new ArrayList<>();
+    public int getProductSum(int n) {
+        int pro_sum = 0;
         while (n != 0) {
-            digits.add(n % 10);
+            pro_sum += Math.pow(n % 10, 2);
             n /= 10;
         }
-        return digits;
-    }
-
-    public int getProductSum(List<Integer> digits) {
-        int sum = 0;
-        for (int i = 0; i < digits.size(); i++) {
-            sum += digits.get(i) * digits.get(i);
-        }
-        return sum;
+        return pro_sum;
     }
 }
